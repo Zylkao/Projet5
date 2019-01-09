@@ -73,7 +73,7 @@ function deleteUser($id)
   $userManager = new \zylkaôme\Projet_OC\Projet5\Model\UserManager();
   $users = $userManager->deleteUsers($id);
 
-  header('Location : index.php?action=membersList&startIndex=0');
+  header('Location: index.php?action=membersList&startIndex=0');
 }
 
 function modifyGamelist()
