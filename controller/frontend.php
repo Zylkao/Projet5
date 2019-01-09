@@ -56,26 +56,27 @@ function updateProfil($id,$steam,$battleTag,$switch,$psn,$xbox)
   }
 }
 
-function connexion($pseudo)
+function connexion()
 {
+
+  $pseudo = $_POST['pseudo'];
+  $password = $_POST['password'];
+
   $userManager = new \zylkaôme\Projet_OC\Projet5\Model\UserManager();
   $affectedLines = $userManager->signIn($pseudo);
 
-  $isPasswordCorrect = password_verify($_POST['password'], $affectedLines['password']);
+  $isPasswordCorrect = password_verify($password, $affectedLines['password']);
 
-  if ($affectedLines === false) {
+  if ($isPasswordCorrect === false) {
     $_SESSION['error'] = 1;
     header("Location: index.php");
   }
   else
   {
-    if ($isPasswordCorrect)
-      {
-        $_SESSION['user_id'] = $affectedLines['user_id'];
-        $_SESSION['pseudo'] = $pseudo;
-        $_SESSION['role'] = $affectedLines['role'];
-        header('Location: index.php');
-      }
+    $_SESSION['user_id'] = $affectedLines['user_id'];
+    $_SESSION['pseudo'] = $pseudo;
+    $_SESSION['role'] = $affectedLines['role'];
+    header('Location: index.php');
   }
 }
 

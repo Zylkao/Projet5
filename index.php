@@ -62,7 +62,7 @@ try {
         }
         elseif ($_GET['action'] == 'connexion') {
           if (!empty($_POST['pseudo']) && !empty($_POST['password'])){
-            connexion($_POST['pseudo'], $_POST['password']);
+            connexion();
           }
           else{
             header('Location: index.php');
