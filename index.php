@@ -54,7 +54,7 @@ try {
         }
         elseif ($_GET['action'] == 'newUser') {
               if (!empty($_POST['pseudo']) && !empty($_POST['email']) && !empty($_POST['password'])) {
-                  newUser($_POST['pseudo'], $_POST['email'], $_POST['password']);
+                  newUser(htmlspecialchars($_POST['pseudo']), htmlspecialchars($_POST['email']), htmlspecialchars($_POST['password']));
               }
               else {
                       throw new Exception('Tous les champs ne sont pas remplis ! Inscription refusé');

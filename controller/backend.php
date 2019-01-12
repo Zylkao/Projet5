@@ -86,27 +86,27 @@ function modifyGamelist()
 
 function addGameToList($game_name,$game_image)
 {
+  $error_upload_message = "";
   $target_dir = "public/image/gamelist/";
   $target_file = $target_dir . basename($_FILES["game_image"]["name"]);
   $uploadOk = 1;
   $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-  if(isset($_POST["submit"])) {
-      $check = getimagesize($_FILES["game_image"]["tmp_name"]);
-      if($check !== false) {
-        $_SESSION['error_upload'] = 1;
-          $error_upload_message = "Le fichier est une image - " . $check["mime"] . ".";
-          $uploadOk = 1;
-      } else {
-          echo "Le fichier n'est pas une image.";
-          $uploadOk = 0;
+
+  $check = getimagesize($_FILES["game_image"]["tmp_name"]);
+    if($check !== false) {
+      $_SESSION['error_upload'] = 1;
+      $error_upload_message = "Le fichier est une image - " . $check["mime"] . ".";
+      $uploadOk = 1;
+    } else {
+        $error_upload_message = "Le fichier n'est pas une image.";
+        $uploadOk = 0;
       }
-  }
   if (file_exists($target_file)) {
     $_SESSION['error_upload'] = 1;
       $error_upload_message = "Désolé , Le nom du fichier est déja attribuer.";
       $uploadOk = 0;
   }
-  if ($_FILES["game_image"]["size"] > 500000) {
+  if ($_FILES["game_image"]["size"] > 50000) {
     $_SESSION['error_upload'] = 1;
       $error_upload_message = "Désolé , l'image est trop grande";
       $uploadOk = 0;
@@ -132,6 +132,7 @@ function addGameToList($game_name,$game_image)
 
   $gamelistManager = new \zylkaôme\Projet_OC\Projet5\Model\GamelistManager();
   $game = $gamelistManager->addGame($game_name,$game_image['name']);
+  $games = $gamelistManager->getGames();
 
   require('views/backend/gamelist_admin.php');
 
